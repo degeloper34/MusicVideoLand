@@ -1,7 +1,17 @@
-import {StyleSheet, Text, View} from "react-native";
+import {ActivityIndicator, StyleSheet, Text, View} from "react-native";
+import {useQuery} from "react-query";
+import {getMusicVideos} from "../api/requestApi";
 import Colors from "../constants/Colors";
 
 export default function HomeScreen() {
+  const {data, isLoading} = useQuery("musicVideos", getMusicVideos);
+
+  console.log("data", data);
+
+  if (isLoading) {
+    return <ActivityIndicator />;
+  }
+
   return (
     <View style={styles.container}>
       <Text style={styles.title}>Tab Home</Text>
