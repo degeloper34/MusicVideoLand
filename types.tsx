@@ -36,3 +36,26 @@ export type RootTabScreenProps<Screen extends keyof RootTabParamList> =
     BottomTabScreenProps<RootTabParamList, Screen>,
     NativeStackScreenProps<RootStackParamList>
   >;
+
+export type Genre = {
+  id: number;
+  name: string;
+};
+
+export type GenreList = Genre[];
+
+export type MusicVideo = {
+  id: number;
+  artist: string;
+  title: string;
+  release_year: number;
+  genre_id: number;
+  image_url: string;
+};
+
+export type MusicVideoList = MusicVideo[];
+
+export type GetMusicVideoResponseModel = {
+  genres: GenreList;
+  videos: MusicVideoList;
+};
