@@ -3,7 +3,7 @@
  * https://reactnavigation.org/docs/getting-started
  *
  */
-import {FontAwesome} from "@expo/vector-icons";
+import {Entypo, FontAwesome} from "@expo/vector-icons";
 import {createBottomTabNavigator} from "@react-navigation/bottom-tabs";
 import {NavigationContainer} from "@react-navigation/native";
 import {createNativeStackNavigator} from "@react-navigation/native-stack";
@@ -16,6 +16,7 @@ import TabTwoScreen from "../screens/TabTwoScreen";
 import HomeScreen from "../screens/HomeScreen";
 import {RootStackParamList, RootTabParamList} from "../../types";
 import LinkingConfiguration from "./LinkingConfiguration";
+import {Pressable} from "react-native";
 
 export default function Navigation() {
   return (
@@ -44,8 +45,26 @@ function RootNavigator() {
         component={NotFoundScreen}
         options={{title: "Oops!"}}
       />
-      <Stack.Group screenOptions={{presentation: "modal"}}>
-        <Stack.Screen name="Modal" component={ModalScreen} />
+      <Stack.Group
+        screenOptions={{presentation: "modal", title: "Select Genre"}}
+      >
+        <Stack.Screen
+          name="Modal"
+          component={ModalScreen}
+          options={({navigation}) => ({
+            headerRight: () => (
+              <Pressable onPress={() => navigation.pop()}>
+                <Entypo name={"cross"} size={25} color={Colors.white} />
+              </Pressable>
+            ),
+            headerStyle: {
+              backgroundColor: Colors.black,
+            },
+            headerTitleStyle: {
+              color: Colors.white,
+            },
+          })}
+        />
       </Stack.Group>
     </Stack.Navigator>
   );

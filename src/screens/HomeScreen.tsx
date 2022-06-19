@@ -1,18 +1,23 @@
+import {FontAwesome} from "@expo/vector-icons";
 import {
   ActivityIndicator,
   FlatList,
   Image,
+  Pressable,
   StyleSheet,
   Text,
+  TextInput,
   View,
 } from "react-native";
 import {useQuery} from "react-query";
-import {MusicVideo} from "../../types";
+import {MusicVideo, RootTabScreenProps} from "../../types";
 import {getMusicVideos} from "../api/requestApi";
 import Colors from "../constants/Colors";
 import Layout from "../constants/Layout";
 
-export default function HomeScreen() {
+export default function HomeScreen({
+  navigation,
+}: RootTabScreenProps<"TabHome">) {
   const {data, isLoading} = useQuery("musicVideos", getMusicVideos);
 
   console.log("data", data);
@@ -52,7 +57,13 @@ export default function HomeScreen() {
     );
   };
 
-  console.log("isLoading", isLoading);
+  const onPressFilter = () => {
+    navigation.navigate("Modal", {
+      genreList: data?.genres,
+    });
+  };
+
+  const onChangeSearchText = () => {};
 
   if (isLoading) {
     return (
@@ -68,13 +79,41 @@ export default function HomeScreen() {
 
   return (
     <View style={styles.container}>
+      <View
+        style={{
+          flexDirection: "row",
+          alignItems: "center",
+          paddingHorizontal: 10,
+          paddingVertical: 20,
+        }}
+      >
+        <TextInput
+          placeholder="Search..."
+          style={{
+            flex: 1,
+            backgroundColor: Colors.white,
+            marginRight: 10,
+            height: "100%",
+            borderRadius: 8,
+            padding: 10,
+          }}
+          onChangeText={onChangeSearchText}
+        />
+
+        <Pressable
+          onPress={onPressFilter}
+          style={{backgroundColor: Colors.white, padding: 10, borderRadius: 8}}
+        >
+          <FontAwesome name={"filter"} color={Colors.black} size={20} />
+        </Pressable>
+      </View>
       <FlatList
         data={data?.videos}
         renderItem={renderItem}
         numColumns={2}
         columnWrapperStyle={{marginBottom: 10}}
         initialNumToRender={10}
-        contentContainerStyle={{paddingTop: 10, paddingHorizontal: 10}}
+        contentContainerStyle={{paddingHorizontal: 10}}
       />
     </View>
   );

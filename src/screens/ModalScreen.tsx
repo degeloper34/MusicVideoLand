@@ -1,20 +1,66 @@
-import {StatusBar} from "expo-status-bar";
-import {Platform, StyleSheet, Text, View} from "react-native";
-import EditScreenInfo from "../components/EditScreenInfo";
+import {FontAwesome} from "@expo/vector-icons";
+import {FlatList, Pressable, StyleSheet, Text, View} from "react-native";
+import {Genre, RootStackScreenProps} from "../../types";
+import Colors from "../constants/Colors";
 
-export default function ModalScreen() {
+export default function ModalScreen({
+  navigation,
+  route,
+}: RootStackScreenProps<"Modal">) {
+  const {genreList, selectedGenreId, setSelectedGenreId} = route.params;
+
+  const renderItem = ({item}: {item: Genre}) => {
+    return (
+      <Pressable
+        onPress={() => {
+          setSelectedGenreId(item.id);
+          navigation.pop();
+        }}
+        style={{
+          flexDirection: "row",
+          alignItems: "center",
+          marginBottom: 10,
+          flex: 1,
+        }}
+      >
+        <View style={{padding: 5, marginRight: 5}}>
+          <FontAwesome
+            name={item.id === selectedGenreId ? "check-circle" : "circle"}
+            size={25}
+            color={Colors.white}
+          />
+        </View>
+        <Text style={{color: Colors.white}}>{item.name}</Text>
+      </Pressable>
+    );
+  };
+
+  const onPressClearFilter = () => {
+    setSelectedGenreId(-1);
+    navigation.pop();
+  };
+
   return (
     <View style={styles.container}>
-      <Text style={styles.title}>Modal</Text>
-      <View
-        style={styles.separator}
-        lightColor="#eee"
-        darkColor="rgba(255,255,255,0.1)"
+      <FlatList
+        data={genreList}
+        renderItem={renderItem}
+        numColumns={2}
+        ListFooterComponent={
+          <Pressable
+            style={{
+              alignItems: "center",
+            }}
+            onPress={onPressClearFilter}
+          >
+            <Text
+              style={{color: Colors.white, textDecorationLine: "underline"}}
+            >
+              Clear Filter
+            </Text>
+          </Pressable>
+        }
       />
-      <EditScreenInfo path="/screens/ModalScreen.tsx" />
-
-      {/* Use a light status bar on iOS to account for the black space above the modal */}
-      <StatusBar style={Platform.OS === "ios" ? "light" : "auto"} />
     </View>
   );
 }
@@ -22,8 +68,8 @@ export default function ModalScreen() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    alignItems: "center",
     justifyContent: "center",
+    backgroundColor: Colors.black,
   },
   title: {
     fontSize: 20,
