@@ -1,4 +1,5 @@
 import {FontAwesome} from "@expo/vector-icons";
+import {useContext, useEffect, useState} from "react";
 import {
   ActivityIndicator,
   FlatList,
@@ -14,20 +15,36 @@ import {MusicVideo, RootTabScreenProps} from "../../types";
 import {getMusicVideos} from "../api/requestApi";
 import Colors from "../constants/Colors";
 import Layout from "../constants/Layout";
+import {MainContext} from "../context/mainContext";
 
 export default function HomeScreen({
   navigation,
 }: RootTabScreenProps<"TabHome">) {
+  const context = useContext(MainContext);
+
   const {data, isLoading} = useQuery("musicVideos", getMusicVideos);
 
-  console.log("data", data);
+  const [videoList, setVideoList] = useState<MusicVideo[]>([]);
+
+  useEffect(() => {
+    if (context?.selectedGenreId === -1) {
+      setVideoList(data?.videos);
+    } else {
+      const filteredVideoList = data?.videos.filter(
+        (eachMusicVideo: MusicVideo) =>
+          eachMusicVideo.genre_id === context?.selectedGenreId
+      );
+
+      setVideoList(filteredVideoList);
+    }
+  }, [context?.selectedGenreId, isLoading]);
 
   const renderItem = ({item, index}: {item: MusicVideo; index: number}) => {
     return (
       <View
         key={index}
         style={{
-          flex: 1,
+          width: "48%",
           height: Layout.window.height / 4,
           borderWidth: 1,
           borderColor: Colors.white,
@@ -63,7 +80,7 @@ export default function HomeScreen({
     });
   };
 
-  const onChangeSearchText = () => {};
+  const onChangeSearchText = (text: string) => {};
 
   if (isLoading) {
     return (
@@ -108,7 +125,7 @@ export default function HomeScreen({
         </Pressable>
       </View>
       <FlatList
-        data={data?.videos}
+        data={videoList}
         renderItem={renderItem}
         numColumns={2}
         columnWrapperStyle={{marginBottom: 10}}

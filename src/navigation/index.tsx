@@ -10,7 +10,6 @@ import {createNativeStackNavigator} from "@react-navigation/native-stack";
 import * as React from "react";
 import Colors from "../constants/Colors";
 import ModalScreen from "../screens/ModalScreen";
-import NotFoundScreen from "../screens/NotFoundScreen";
 import TabOneScreen from "../screens/TabOneScreen";
 import TabTwoScreen from "../screens/TabTwoScreen";
 import HomeScreen from "../screens/HomeScreen";
@@ -40,11 +39,7 @@ function RootNavigator() {
         component={BottomTabNavigator}
         options={{headerShown: false}}
       />
-      <Stack.Screen
-        name="NotFound"
-        component={NotFoundScreen}
-        options={{title: "Oops!"}}
-      />
+
       <Stack.Group
         screenOptions={{presentation: "modal", title: "Select Genre"}}
       >

@@ -1,19 +1,23 @@
 import {FontAwesome} from "@expo/vector-icons";
+import {useContext} from "react";
 import {FlatList, Pressable, StyleSheet, Text, View} from "react-native";
 import {Genre, RootStackScreenProps} from "../../types";
 import Colors from "../constants/Colors";
+import {MainContext} from "../context/mainContext";
 
 export default function ModalScreen({
   navigation,
   route,
 }: RootStackScreenProps<"Modal">) {
-  const {genreList, selectedGenreId, setSelectedGenreId} = route.params;
+  const {genreList} = route.params;
+
+  const context = useContext(MainContext);
 
   const renderItem = ({item}: {item: Genre}) => {
     return (
       <Pressable
         onPress={() => {
-          setSelectedGenreId(item.id);
+          context?.setSelectedGenreId(item.id);
           navigation.pop();
         }}
         style={{
@@ -25,7 +29,9 @@ export default function ModalScreen({
       >
         <View style={{padding: 5, marginRight: 5}}>
           <FontAwesome
-            name={item.id === selectedGenreId ? "check-circle" : "circle"}
+            name={
+              item.id === context?.selectedGenreId ? "check-circle" : "circle"
+            }
             size={25}
             color={Colors.white}
           />
@@ -36,7 +42,7 @@ export default function ModalScreen({
   };
 
   const onPressClearFilter = () => {
-    setSelectedGenreId(-1);
+    context?.setSelectedGenreId(-1);
     navigation.pop();
   };
 
@@ -70,14 +76,5 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: "center",
     backgroundColor: Colors.black,
-  },
-  title: {
-    fontSize: 20,
-    fontWeight: "bold",
-  },
-  separator: {
-    marginVertical: 30,
-    height: 1,
-    width: "80%",
   },
 });
