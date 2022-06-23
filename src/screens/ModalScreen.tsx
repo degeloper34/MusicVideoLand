@@ -1,23 +1,24 @@
 import {FontAwesome} from "@expo/vector-icons";
-import {useContext} from "react";
 import {FlatList, Pressable, StyleSheet, Text, View} from "react-native";
 import {Genre, RootStackScreenProps} from "../../types";
 import Colors from "../constants/Colors";
-import {MainContext} from "../context/mainContext";
+import {useAppDispatch, useAppSelector} from "../hooks/useRedux";
+import {setSelectedGenre} from "../store/actions";
 
 export default function ModalScreen({
   navigation,
-  route,
 }: RootStackScreenProps<"Modal">) {
-  const {genreList} = route.params;
+  const musicVideoState = useAppSelector((state) => state?.musicVideoReducer);
 
-  const context = useContext(MainContext);
+  const dispatch = useAppDispatch();
+
+  const setGenre = (genreObj: Genre) => dispatch(setSelectedGenre(genreObj));
 
   const renderItem = ({item}: {item: Genre}) => {
     return (
       <Pressable
         onPress={() => {
-          context?.setSelectedGenreId(item.id);
+          setGenre(item);
           navigation.pop();
         }}
         style={{
@@ -30,7 +31,9 @@ export default function ModalScreen({
         <View style={{padding: 5, marginRight: 5}}>
           <FontAwesome
             name={
-              item.id === context?.selectedGenreId ? "check-circle" : "circle"
+              item.id === musicVideoState.selectedGenre.id
+                ? "check-circle"
+                : "circle"
             }
             size={25}
             color={Colors.white}
@@ -42,14 +45,13 @@ export default function ModalScreen({
   };
 
   const onPressClearFilter = () => {
-    context?.setSelectedGenreId(-1);
     navigation.pop();
   };
 
   return (
     <View style={styles.container}>
       <FlatList
-        data={genreList}
+        data={musicVideoState?.genreList}
         renderItem={renderItem}
         numColumns={2}
         ListFooterComponent={

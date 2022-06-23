@@ -1,7 +1,6 @@
 import {FontAwesome} from "@expo/vector-icons";
-import {useContext, useEffect, useState} from "react";
+import {useEffect} from "react";
 import {
-  ActivityIndicator,
   FlatList,
   Image,
   Pressable,
@@ -10,34 +9,26 @@ import {
   TextInput,
   View,
 } from "react-native";
-import {useQuery} from "react-query";
 import {MusicVideo, RootTabScreenProps} from "../../types";
-import {getMusicVideos} from "../api/requestApi";
 import Colors from "../constants/Colors";
 import Layout from "../constants/Layout";
-import {MainContext} from "../context/mainContext";
+import {useAppDispatch, useAppSelector} from "../hooks/useRedux";
+import {getMusicVideo} from "../store/actions";
 
 export default function HomeScreen({
   navigation,
 }: RootTabScreenProps<"TabHome">) {
-  const context = useContext(MainContext);
+  console.log("Render TabHome");
 
-  const {data, isLoading} = useQuery("musicVideos", getMusicVideos);
+  const musicVideoState = useAppSelector((state) => state?.musicVideoReducer);
 
-  const [videoList, setVideoList] = useState<MusicVideo[]>([]);
+  const dispatch = useAppDispatch();
+
+  const fetchMusicVideo = () => dispatch(getMusicVideo());
 
   useEffect(() => {
-    if (context?.selectedGenreId === -1) {
-      setVideoList(data?.videos);
-    } else {
-      const filteredVideoList = data?.videos.filter(
-        (eachMusicVideo: MusicVideo) =>
-          eachMusicVideo.genre_id === context?.selectedGenreId
-      );
-
-      setVideoList(filteredVideoList);
-    }
-  }, [context?.selectedGenreId, isLoading]);
+    fetchMusicVideo();
+  }, []);
 
   const renderItem = ({item, index}: {item: MusicVideo; index: number}) => {
     return (
@@ -74,25 +65,28 @@ export default function HomeScreen({
     );
   };
 
-  const onPressFilter = () => {
-    navigation.navigate("Modal", {
-      genreList: data?.genres,
-    });
-  };
+  // const onPressFilter = () => {
+  //   navigation.navigate("Modal", {
+  //     genreList: data?.genres,
+  //   });
+  // };
 
   const onChangeSearchText = (text: string) => {};
+  const onPressFilter = () => {
+    navigation.navigate("Modal");
+  };
 
-  if (isLoading) {
-    return (
-      <View style={{flex: 1, backgroundColor: Colors.black}}>
-        <ActivityIndicator
-          size={"large"}
-          color={Colors.white}
-          style={{flex: 1, justifyContent: "center"}}
-        />
-      </View>
-    );
-  }
+  // if (isLoading) {
+  //   return (
+  //     <View style={{flex: 1, backgroundColor: Colors.black}}>
+  //       <ActivityIndicator
+  //         size={"large"}
+  //         color={Colors.white}
+  //         style={{flex: 1, justifyContent: "center"}}
+  //       />
+  //     </View>
+  //   );
+  // }
 
   return (
     <View style={styles.container}>
@@ -125,7 +119,7 @@ export default function HomeScreen({
         </Pressable>
       </View>
       <FlatList
-        data={videoList}
+        data={musicVideoState?.musicVideoList}
         renderItem={renderItem}
         numColumns={2}
         columnWrapperStyle={{marginBottom: 10}}
