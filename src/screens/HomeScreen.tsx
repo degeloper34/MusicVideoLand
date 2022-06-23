@@ -9,11 +9,13 @@ import {
   TextInput,
   View,
 } from "react-native";
-import {MusicVideo, RootTabScreenProps} from "../../types";
+import {MusicVideo, RootTabScreenProps, Genre} from "../../types";
+import {CustomText} from "../components/atoms";
 import Colors from "../constants/Colors";
 import Layout from "../constants/Layout";
 import {useAppDispatch, useAppSelector} from "../hooks/useRedux";
 import {getMusicVideo} from "../store/actions";
+import musicVideoHelper from "../utils/musicVideoHelper";
 
 export default function HomeScreen({
   navigation,
@@ -35,11 +37,11 @@ export default function HomeScreen({
       <View
         key={index}
         style={{
-          width: "48%",
+          width: Layout.window.width / 3,
           height: Layout.window.height / 4,
           borderWidth: 1,
           borderColor: Colors.white,
-          marginRight: index % 2 === 0 ? 10 : 0,
+          marginRight: 10,
           borderRadius: 8,
           overflow: "hidden",
         }}
@@ -52,24 +54,25 @@ export default function HomeScreen({
         />
         <View style={{flex: 1, padding: 10}}>
           <View style={{flex: 1}}>
-            <Text style={{color: Colors.white}} numberOfLines={1}>
-              {item.title}
-            </Text>
+            <CustomText text={item?.title} type={"medium"} numberOfLines={1} />
           </View>
-          <Text style={{color: Colors.white}} numberOfLines={1}>
-            {item.artist}
-          </Text>
-          <Text style={{color: Colors.white}}>{item.release_year}</Text>
+          <CustomText
+            text={item?.artist}
+            type={"regular"}
+            numberOfLines={1}
+            fontSize={12}
+          />
+          <CustomText
+            text={item?.release_year}
+            type={"regular"}
+            numberOfLines={1}
+            textColor={Colors.gray}
+            fontSize={10}
+          />
         </View>
       </View>
     );
   };
-
-  // const onPressFilter = () => {
-  //   navigation.navigate("Modal", {
-  //     genreList: data?.genres,
-  //   });
-  // };
 
   const onChangeSearchText = (text: string) => {};
   const onPressFilter = () => {
@@ -87,6 +90,31 @@ export default function HomeScreen({
   //     </View>
   //   );
   // }
+
+  const renderGenreItem = ({item}: {item: string}) => {
+    return (
+      <View style={{marginBottom: 20}}>
+        <View style={{padding: 10}}>
+          <CustomText
+            text={musicVideoHelper.findGenreTitleByGenreId(
+              musicVideoState?.genreList,
+              item
+            )}
+            type={"bold"}
+            fontSize={16}
+          />
+        </View>
+
+        <FlatList
+          data={musicVideoState?.musicVideoList[item]}
+          renderItem={renderItem}
+          initialNumToRender={10}
+          contentContainerStyle={{paddingHorizontal: 10}}
+          horizontal
+        />
+      </View>
+    );
+  };
 
   return (
     <View style={styles.container}>
@@ -118,14 +146,23 @@ export default function HomeScreen({
           <FontAwesome name={"filter"} color={Colors.black} size={20} />
         </Pressable>
       </View>
+
       <FlatList
-        data={musicVideoState?.musicVideoList}
-        renderItem={renderItem}
-        numColumns={2}
-        columnWrapperStyle={{marginBottom: 10}}
+        data={Object.keys(musicVideoState?.musicVideoList)}
+        renderItem={renderGenreItem}
         initialNumToRender={10}
-        contentContainerStyle={{paddingHorizontal: 10}}
       />
+
+      {/* {Object.keys(musicVideoState?.musicVideoList).map(
+        (eachGenreId, index) => {
+          console.log("eachGenreId", eachGenreId);
+          return (
+            <View key={index.toString()}>
+              <Text style={{color: "white"}}>{eachGenreId}</Text>
+            </View>
+          );
+        }
+      )} */}
     </View>
   );
 }
