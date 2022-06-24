@@ -11,7 +11,7 @@ import * as React from "react";
 import Colors from "../constants/Colors";
 import ModalScreen from "../screens/ModalScreen";
 import TabOneScreen from "../screens/TabOneScreen";
-import TabTwoScreen from "../screens/TabTwoScreen";
+import SearchScreen from "../screens/SearchScreen";
 import HomeScreen from "../screens/HomeScreen";
 import {RootStackParamList, RootTabParamList} from "../../types";
 import LinkingConfiguration from "./LinkingConfiguration";
@@ -106,11 +106,11 @@ function BottomTabNavigator() {
         }}
       />
       <BottomTab.Screen
-        name="TabTwo"
-        component={TabTwoScreen}
+        name="TabSearch"
+        component={SearchScreen}
         options={{
-          title: "</>",
-          tabBarIcon: ({color}) => <TabBarIcon name="code" color={color} />,
+          title: "Search",
+          tabBarIcon: ({color}) => <TabBarIcon name="search" color={color} />,
         }}
       />
     </BottomTab.Navigator>

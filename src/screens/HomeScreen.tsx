@@ -1,15 +1,6 @@
-import {FontAwesome} from "@expo/vector-icons";
 import {useEffect} from "react";
-import {
-  FlatList,
-  Image,
-  Pressable,
-  StyleSheet,
-  Text,
-  TextInput,
-  View,
-} from "react-native";
-import {MusicVideo, RootTabScreenProps, Genre} from "../../types";
+import {FlatList, Image, StyleSheet, View} from "react-native";
+import {MusicVideo} from "../../types";
 import {CustomText} from "../components/atoms";
 import Colors from "../constants/Colors";
 import Layout from "../constants/Layout";
@@ -17,10 +8,8 @@ import {useAppDispatch, useAppSelector} from "../hooks/useRedux";
 import {getMusicVideo} from "../store/actions";
 import musicVideoHelper from "../utils/musicVideoHelper";
 
-export default function HomeScreen({
-  navigation,
-}: RootTabScreenProps<"TabHome">) {
-  console.log("Render TabHome");
+export default function HomeScreen() {
+  console.log("Render HomeScreen");
 
   const musicVideoState = useAppSelector((state) => state?.musicVideoReducer);
 
@@ -74,11 +63,6 @@ export default function HomeScreen({
     );
   };
 
-  const onChangeSearchText = (text: string) => {};
-  const onPressFilter = () => {
-    navigation.navigate("Modal");
-  };
-
   // if (isLoading) {
   //   return (
   //     <View style={{flex: 1, backgroundColor: Colors.black}}>
@@ -118,51 +102,11 @@ export default function HomeScreen({
 
   return (
     <View style={styles.container}>
-      <View
-        style={{
-          flexDirection: "row",
-          alignItems: "center",
-          paddingHorizontal: 10,
-          paddingVertical: 20,
-        }}
-      >
-        <TextInput
-          placeholder="Search..."
-          style={{
-            flex: 1,
-            backgroundColor: Colors.white,
-            marginRight: 10,
-            height: "100%",
-            borderRadius: 8,
-            padding: 10,
-          }}
-          onChangeText={onChangeSearchText}
-        />
-
-        <Pressable
-          onPress={onPressFilter}
-          style={{backgroundColor: Colors.white, padding: 10, borderRadius: 8}}
-        >
-          <FontAwesome name={"filter"} color={Colors.black} size={20} />
-        </Pressable>
-      </View>
-
       <FlatList
         data={Object.keys(musicVideoState?.musicVideoList)}
         renderItem={renderGenreItem}
         initialNumToRender={10}
       />
-
-      {/* {Object.keys(musicVideoState?.musicVideoList).map(
-        (eachGenreId, index) => {
-          console.log("eachGenreId", eachGenreId);
-          return (
-            <View key={index.toString()}>
-              <Text style={{color: "white"}}>{eachGenreId}</Text>
-            </View>
-          );
-        }
-      )} */}
     </View>
   );
 }

@@ -1,5 +1,5 @@
 import {Genre} from "../../../types";
-import {GET_MUSIC_VIDEO, SET_SELECTED_GENRE} from "./actionTypes";
+import {GET_MUSIC_VIDEO, SET_SELECTED_GENRE_ID} from "./actionTypes";
 
 export const getMusicVideo = () => {
   return {
@@ -7,9 +7,9 @@ export const getMusicVideo = () => {
   };
 };
 
-export const setSelectedGenre = (payload: Genre) => {
+export const setSelectedGenreId = (payload: number) => {
   return {
-    type: SET_SELECTED_GENRE,
+    type: SET_SELECTED_GENRE_ID,
     payload,
   };
 };

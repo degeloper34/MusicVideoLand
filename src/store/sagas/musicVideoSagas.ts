@@ -3,6 +3,7 @@ import {
   GET_MUSIC_VIDEO,
   SET_GENRE_LIST,
   SET_MUSIC_VIDEO_LIST,
+  SET_VIDEO_LIST,
 } from "../actions/actionTypes";
 import {getMusicVideos} from "../../api/requestApi";
 import {GetMusicVideoResponseModel} from "../../../types";
@@ -22,6 +23,10 @@ function* getMusicVideo() {
       put({
         type: SET_GENRE_LIST,
         payload: response?.genres,
+      }),
+      put({
+        type: SET_VIDEO_LIST,
+        payload: response?.videos,
       }),
     ]);
   } catch (err) {}

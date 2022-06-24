@@ -3,7 +3,7 @@ import {FlatList, Pressable, StyleSheet, Text, View} from "react-native";
 import {Genre, RootStackScreenProps} from "../../types";
 import Colors from "../constants/Colors";
 import {useAppDispatch, useAppSelector} from "../hooks/useRedux";
-import {setSelectedGenre} from "../store/actions";
+import {setSelectedGenreId} from "../store/actions";
 
 export default function ModalScreen({
   navigation,
@@ -12,13 +12,13 @@ export default function ModalScreen({
 
   const dispatch = useAppDispatch();
 
-  const setGenre = (genreObj: Genre) => dispatch(setSelectedGenre(genreObj));
+  const setGenreId = (genreId: number) => dispatch(setSelectedGenreId(genreId));
 
   const renderItem = ({item}: {item: Genre}) => {
     return (
       <Pressable
         onPress={() => {
-          setGenre(item);
+          setGenreId(item.id);
           navigation.pop();
         }}
         style={{
@@ -31,7 +31,7 @@ export default function ModalScreen({
         <View style={{padding: 5, marginRight: 5}}>
           <FontAwesome
             name={
-              item.id === musicVideoState.selectedGenre.id
+              item.id === musicVideoState?.selectedGenreId
                 ? "check-circle"
                 : "circle"
             }
@@ -45,6 +45,7 @@ export default function ModalScreen({
   };
 
   const onPressClearFilter = () => {
+    setGenreId(-1);
     navigation.pop();
   };
 

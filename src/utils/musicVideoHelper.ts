@@ -4,7 +4,7 @@ export default {
   findGenreTitleByGenreId(genreList: GenreList, genreId: string) {
     return (
       genreList.find((eachGenre: Genre) => eachGenre?.id === parseInt(genreId))
-        ?.name || `There is no title for GenreId: ${genreId}`
+        ?.name || `There is no title for genre_id: ${genreId}`
     );
   },
 };
