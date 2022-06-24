@@ -1,9 +1,7 @@
-import {call, put, takeLatest, all} from "redux-saga/effects";
+import {call, put, takeLatest} from "redux-saga/effects";
 import {
   GET_MUSIC_VIDEO,
-  SET_GENRE_LIST,
-  SET_MUSIC_VIDEO_LIST,
-  SET_VIDEO_LIST,
+  SET_GET_MUSIC_VIDEO_RESPONSE,
 } from "../actions/actionTypes";
 import {getMusicVideos} from "../../api/requestApi";
 import {GetMusicVideoResponseModel} from "../../../types";
@@ -15,20 +13,14 @@ function* getMusicVideo() {
 
     const musicVideoListGroupByGenreId = groupBy(response?.videos, "genre_id");
 
-    yield all([
-      put({
-        type: SET_MUSIC_VIDEO_LIST,
-        payload: musicVideoListGroupByGenreId,
-      }),
-      put({
-        type: SET_GENRE_LIST,
-        payload: response?.genres,
-      }),
-      put({
-        type: SET_VIDEO_LIST,
-        payload: response?.videos,
-      }),
-    ]);
+    yield put({
+      type: SET_GET_MUSIC_VIDEO_RESPONSE,
+      payload: {
+        musicVideoList: musicVideoListGroupByGenreId,
+        genreList: response?.genres,
+        videoList: response?.videos,
+      },
+    });
   } catch (err) {}
 }
 
