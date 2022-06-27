@@ -1,5 +1,6 @@
 import {StyleSheet, Text, View} from "react-native";
 import Colors from "../constants/Colors";
+import Layout from "../constants/Layout";
 
 export default function TabOneScreen() {
   return (
@@ -18,12 +19,12 @@ const styles = StyleSheet.create({
     backgroundColor: Colors.black,
   },
   title: {
-    fontSize: 20,
+    fontSize: Layout.l,
     fontWeight: "bold",
     color: Colors.white,
   },
   separator: {
-    marginVertical: 30,
+    marginVertical: Layout.xxl,
     height: 1,
     width: "80%",
     backgroundColor: Colors.white,

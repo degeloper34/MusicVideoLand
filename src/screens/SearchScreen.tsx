@@ -11,6 +11,7 @@ import {
 import {MusicVideo, MusicVideoList, RootTabScreenProps} from "../../types";
 import {CustomText} from "../components/atoms";
 import Colors from "../constants/Colors";
+import Layout from "../constants/Layout";
 import {useAppSelector} from "../hooks/useRedux";
 import musicVideoHelper from "../utils/musicVideoHelper";
 import searchHelper from "../utils/searchHelper";
@@ -107,38 +108,38 @@ const styles = StyleSheet.create({
     backgroundColor: Colors.black,
   },
   viewSearchFilter: {
-    paddingHorizontal: 10,
-    paddingTop: 20,
+    paddingHorizontal: Layout.s,
+    paddingTop: Layout.l,
     flexDirection: "row",
   },
   txtInputSearch: {
     backgroundColor: Colors.white,
     borderRadius: 8,
-    padding: 10,
+    padding: Layout.s,
     flex: 1,
-    marginRight: 10,
+    marginRight: Layout.s,
   },
   btnFilter: {
     backgroundColor: Colors.white,
-    padding: 10,
+    padding: Layout.s,
     borderRadius: 8,
   },
   flatListFilteredSearched: {
-    paddingTop: 20,
-    paddingHorizontal: 10,
+    paddingTop: Layout.l,
+    paddingHorizontal: Layout.s,
   },
   imgMusicVideo: {
     width: 50,
     height: 50,
-    borderRadius: 25,
-    marginRight: 10,
+    borderRadius: Layout.xl,
+    marginRight: Layout.s,
   },
   viewRenderItem: {
     borderWidth: 1,
     borderColor: Colors.white,
-    padding: 10,
+    padding: Layout.s,
     borderRadius: 8,
-    marginBottom: 10,
+    marginBottom: Layout.s,
     flexDirection: "row",
     alignItems: "center",
     overflow: "hidden",

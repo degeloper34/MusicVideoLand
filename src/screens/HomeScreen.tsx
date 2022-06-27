@@ -142,21 +142,21 @@ const styles = StyleSheet.create({
     backgroundColor: Colors.black,
   },
   flatListMusicVideos: {
-    paddingHorizontal: 10,
-    marginBottom: 20,
+    paddingHorizontal: Layout.s,
+    marginBottom: Layout.l,
   },
   flatListGenres: {
-    paddingTop: 20,
+    paddingTop: Layout.l,
   },
   txtGenreName: {
-    padding: 10,
+    padding: Layout.s,
   },
   viewMusicVideoItem: {
     width: Layout.window.width / 3,
     height: Layout.window.height / 4,
     borderWidth: 1,
     borderColor: Colors.white,
-    marginRight: 10,
+    marginRight: Layout.s,
     borderRadius: 8,
     overflow: "hidden",
   },
@@ -165,7 +165,7 @@ const styles = StyleSheet.create({
   },
   viewMusicVideoBody: {
     flex: 1,
-    padding: 10,
+    padding: Layout.s,
   },
   txtMusicVideoTitle: {
     flex: 1,

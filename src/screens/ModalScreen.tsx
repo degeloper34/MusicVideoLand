@@ -3,6 +3,7 @@ import {FlatList, Pressable, StyleSheet, View} from "react-native";
 import {Genre, RootStackScreenProps} from "../../types";
 import {CustomText} from "../components/atoms";
 import Colors from "../constants/Colors";
+import Layout from "../constants/Layout";
 import {useAppDispatch, useAppSelector} from "../hooks/useRedux";
 import {setSelectedGenreId} from "../store/actions";
 
@@ -85,24 +86,24 @@ const styles = StyleSheet.create({
     backgroundColor: Colors.black,
   },
   flatListGenres: {
-    padding: 20,
+    padding: Layout.l,
   },
   txtClearFilter: {
     alignSelf: "flex-end",
-    marginBottom: 20,
+    marginBottom: Layout.l,
   },
   btnRenderItem: {
     flexDirection: "row",
     alignItems: "center",
-    marginBottom: 10,
+    marginBottom: Layout.s,
     borderWidth: 1,
     borderColor: Colors.white,
     borderRadius: 8,
-    padding: 10,
+    padding: Layout.s,
     flex: 1,
   },
   iconCheck: {
-    padding: 5,
-    marginRight: 5,
+    padding: Layout.xs,
+    marginRight: Layout.xs,
   },
 });
