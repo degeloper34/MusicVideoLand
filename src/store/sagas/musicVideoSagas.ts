@@ -5,6 +5,7 @@ import {
 } from "../actions/actionTypes";
 import {getMusicVideos} from "../../api/requestApi";
 import {GetMusicVideoResponseModel} from "../../../types";
+import {errorHandler} from "../../api/errorHandler";
 
 function* getMusicVideo() {
   try {
@@ -17,7 +18,9 @@ function* getMusicVideo() {
         musicVideoList: response?.videos,
       },
     });
-  } catch (err) {}
+  } catch (err: any) {
+    errorHandler(err, "Error while fetching music videos");
+  }
 }
 
 export function* musicVideoWatcher() {
