@@ -5,7 +5,7 @@ import {Provider} from "react-redux";
 import {store} from "../../store";
 
 describe("ModalScreen Tests", () => {
-  it("ModalScreen | Render without issues", () => {
+  test("ModalScreen | Render without issues", () => {
     const screen = renderer
       .create(
         <Provider store={store}>

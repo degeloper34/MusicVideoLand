@@ -76,8 +76,8 @@ function BottomTabNavigator() {
     <BottomTab.Navigator
       initialRouteName="TabHome"
       screenOptions={{
-        tabBarActiveTintColor: Colors.white,
         tabBarShowLabel: false,
+        tabBarActiveTintColor: Colors.white,
         headerStyle: {
           backgroundColor: Colors.black,
         },
@@ -95,6 +95,7 @@ function BottomTabNavigator() {
         options={{
           title: "</>",
           tabBarIcon: ({color}) => <TabBarIcon name="code" color={color} />,
+          tabBarTestID: "TabOne",
         }}
       />
       <BottomTab.Screen
@@ -103,6 +104,7 @@ function BottomTabNavigator() {
         options={{
           title: "Home",
           tabBarIcon: ({color}) => <TabBarIcon name="home" color={color} />,
+          tabBarTestID: "TabHome",
         }}
       />
       <BottomTab.Screen
@@ -111,6 +113,7 @@ function BottomTabNavigator() {
         options={{
           title: "Search",
           tabBarIcon: ({color}) => <TabBarIcon name="search" color={color} />,
+          tabBarTestID: "TabSearch",
         }}
       />
     </BottomTab.Navigator>

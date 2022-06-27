@@ -94,22 +94,3 @@ exports[`CustomText renders correctly with white text 1`] = `
   Hello, degeloper
 </Text>
 `;
-
-exports[`CustomText renders correctly with yellow text 1`] = `
-<Text
-  allowFontScaling={false}
-  style={
-    Array [
-      undefined,
-      Object {
-        "color": "#fff",
-        "fontFamily": "sora-bold",
-        "fontSize": 12,
-        "textDecorationLine": "none",
-      },
-    ]
-  }
->
-  Hello, degeloper
-</Text>
-`;

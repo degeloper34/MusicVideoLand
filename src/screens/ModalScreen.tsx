@@ -11,7 +11,7 @@ export default function ModalScreen({
   navigation,
 }: RootStackScreenProps<"Modal">) {
   const {genreList} = useAppSelector((state) => state?.musicVideoReducer);
-  const searchState = useAppSelector((state) => state?.searchReducer);
+  const {selectedGenreId} = useAppSelector((state) => state?.searchReducer);
 
   const dispatch = useAppDispatch();
 
@@ -35,11 +35,7 @@ export default function ModalScreen({
         style={btnRenderItem}
       >
         <FontAwesome
-          name={
-            item?.id === searchState?.selectedGenreId
-              ? "check-circle"
-              : "circle"
-          }
+          name={item?.id === selectedGenreId ? "check-circle" : "circle"}
           size={25}
           color={Colors.white}
           style={iconCheck}

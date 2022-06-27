@@ -5,7 +5,7 @@ import {Provider} from "react-redux";
 import {store} from "../../store";
 
 describe("HomeScreen Tests", () => {
-  it("HomeScreen | Render without issues", () => {
+  test("HomeScreen | Render without issues", () => {
     const screen = renderer
       .create(
         <Provider store={store}>

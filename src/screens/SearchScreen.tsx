@@ -74,7 +74,7 @@ export default function SearchScreen({
       <View style={styles.viewSearchFilter}>
         <TextInput
           value={searchedText}
-          placeholder="Search by title"
+          placeholder="Search by title..."
           style={styles.txtInputSearch}
           onChangeText={onChangeSearchText}
           autoFocus={true}
@@ -85,7 +85,11 @@ export default function SearchScreen({
           maxLength={30}
         />
 
-        <Pressable onPress={onPressFilter} style={styles.btnFilter}>
+        <Pressable
+          onPress={onPressFilter}
+          style={styles.btnFilter}
+          testID={"btnFilter"}
+        >
           <FontAwesome name={"filter"} color={Colors.black} size={20} />
         </Pressable>
       </View>

@@ -25,7 +25,7 @@ exports[`SearchScreen Tests SearchScreen | Render without issues 1`] = `
       clearButtonMode="always"
       maxLength={30}
       onChangeText={[Function]}
-      placeholder="Search by title"
+      placeholder="Search by title..."
       returnKeyType="done"
       style={
         Object {
@@ -58,6 +58,7 @@ exports[`SearchScreen Tests SearchScreen | Render without issues 1`] = `
           "padding": 10,
         }
       }
+      testID="btnFilter"
     />
   </View>
   <RCTScrollView

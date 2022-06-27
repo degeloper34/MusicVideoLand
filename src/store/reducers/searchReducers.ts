@@ -1,7 +1,4 @@
-import {
-  SET_GET_MUSIC_VIDEO_RESPONSE,
-  SET_SELECTED_GENRE_ID,
-} from "../actions/actionTypes";
+import {SET_SELECTED_GENRE_ID} from "../actions/actionTypes";
 
 const initialState = {
   selectedGenreId: -1,
