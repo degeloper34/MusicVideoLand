@@ -1,6 +1,12 @@
-import {useEffect} from "react";
-import {FlatList, Image, StyleSheet, View} from "react-native";
-import {MusicVideo} from "../../types";
+import {useEffect, useState} from "react";
+import {
+  ActivityIndicator,
+  FlatList,
+  Image,
+  StyleSheet,
+  View,
+} from "react-native";
+import {Genre, MusicVideo} from "../../types";
 import {CustomText} from "../components/atoms";
 import Colors from "../constants/Colors";
 import Layout from "../constants/Layout";
@@ -11,40 +17,80 @@ import musicVideoHelper from "../utils/musicVideoHelper";
 export default function HomeScreen() {
   console.log("Render HomeScreen");
 
-  const musicVideoState = useAppSelector((state) => state?.musicVideoReducer);
+  const [loading, setLoading] = useState(false);
+
+  const {musicVideoList, genreList} = useAppSelector(
+    (state) => state?.musicVideoReducer
+  );
 
   const dispatch = useAppDispatch();
 
   const fetchMusicVideo = () => dispatch(getMusicVideo());
 
   useEffect(() => {
+    setLoading(true);
     fetchMusicVideo();
+    setLoading(false);
   }, []);
 
-  const renderItem = ({item, index}: {item: MusicVideo; index: number}) => {
+  const {
+    container,
+    flatListGenres,
+    txtGenreName,
+    flatListMusicVideos,
+    viewMusicVideoItem,
+    imgMusicVideo,
+    viewMusicVideoBody,
+    txtMusicVideoTitle,
+    activityIndicator,
+  } = styles;
+
+  const renderGenreItem = ({item}: {item: Genre}) => {
+    const musicVideosByGenreId = musicVideoHelper.findMusicVideosByGenreId(
+      musicVideoList,
+      item?.id
+    );
+
+    if (musicVideosByGenreId.length === 0) return null;
     return (
-      <View
-        key={index}
-        style={{
-          width: Layout.window.width / 3,
-          height: Layout.window.height / 4,
-          borderWidth: 1,
-          borderColor: Colors.white,
-          marginRight: 10,
-          borderRadius: 8,
-          overflow: "hidden",
-        }}
-      >
+      <>
+        <CustomText
+          text={item?.name}
+          type={"bold"}
+          fontSize={16}
+          style={txtGenreName}
+        />
+
+        <FlatList
+          data={musicVideosByGenreId}
+          renderItem={renderMusicVideoItem}
+          initialNumToRender={10}
+          keyExtractor={(__, index) => String(index)}
+          contentContainerStyle={flatListMusicVideos}
+          horizontal
+          showsHorizontalScrollIndicator={false}
+        />
+      </>
+    );
+  };
+
+  const renderMusicVideoItem = ({item}: {item: MusicVideo}) => {
+    return (
+      <View style={viewMusicVideoItem}>
         <Image
           source={{uri: item.image_url}}
-          style={{flex: 2}}
+          style={imgMusicVideo}
           resizeMode={"cover"}
           defaultSource={require("../assets/images/icon.png")}
         />
-        <View style={{flex: 1, padding: 10}}>
-          <View style={{flex: 1}}>
-            <CustomText text={item?.title} type={"medium"} numberOfLines={1} />
-          </View>
+        <View style={viewMusicVideoBody}>
+          <CustomText
+            text={item?.title}
+            type={"medium"}
+            numberOfLines={1}
+            style={txtMusicVideoTitle}
+          />
+
           <CustomText
             text={item?.artist}
             type={"regular"}
@@ -63,49 +109,25 @@ export default function HomeScreen() {
     );
   };
 
-  // if (isLoading) {
-  //   return (
-  //     <View style={{flex: 1, backgroundColor: Colors.black}}>
-  //       <ActivityIndicator
-  //         size={"large"}
-  //         color={Colors.white}
-  //         style={{flex: 1, justifyContent: "center"}}
-  //       />
-  //     </View>
-  //   );
-  // }
-
-  const renderGenreItem = ({item}: {item: string}) => {
+  if (loading) {
     return (
-      <View style={{marginBottom: 20}}>
-        <View style={{padding: 10}}>
-          <CustomText
-            text={musicVideoHelper.findGenreTitleByGenreId(
-              musicVideoState?.genreList,
-              item
-            )}
-            type={"bold"}
-            fontSize={16}
-          />
-        </View>
-
-        <FlatList
-          data={musicVideoState?.musicVideoList[item]}
-          renderItem={renderItem}
-          initialNumToRender={10}
-          contentContainerStyle={{paddingHorizontal: 10}}
-          horizontal
-        />
-      </View>
+      <ActivityIndicator
+        size={"large"}
+        color={Colors.white}
+        style={activityIndicator}
+      />
     );
-  };
+  }
 
   return (
-    <View style={styles.container}>
+    <View style={container}>
       <FlatList
-        data={Object.keys(musicVideoState?.musicVideoList)}
+        data={genreList}
         renderItem={renderGenreItem}
+        keyExtractor={(__, index) => String(index)}
         initialNumToRender={10}
+        style={flatListGenres}
+        showsVerticalScrollIndicator={false}
       />
     </View>
   );
@@ -115,5 +137,39 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: Colors.black,
+  },
+  activityIndicator: {
+    flex: 1,
+    justifyContent: "center",
+    backgroundColor: Colors.black,
+  },
+  flatListMusicVideos: {
+    paddingHorizontal: 10,
+    marginBottom: 20,
+  },
+  flatListGenres: {
+    paddingTop: 20,
+  },
+  txtGenreName: {
+    padding: 10,
+  },
+  viewMusicVideoItem: {
+    width: Layout.window.width / 3,
+    height: Layout.window.height / 4,
+    borderWidth: 1,
+    borderColor: Colors.white,
+    marginRight: 10,
+    borderRadius: 8,
+    overflow: "hidden",
+  },
+  imgMusicVideo: {
+    flex: 2,
+  },
+  viewMusicVideoBody: {
+    flex: 1,
+    padding: 10,
+  },
+  txtMusicVideoTitle: {
+    flex: 1,
   },
 });

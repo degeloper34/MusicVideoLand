@@ -4,18 +4,13 @@ import {
 } from "../actions/actionTypes";
 
 const initialState = {
-  musicVideoList: [],
-  genreList: [],
+  selectedGenreId: -1,
 };
 
 function musicVideoReducer(state = initialState, action: any) {
   switch (action.type) {
-    case SET_GET_MUSIC_VIDEO_RESPONSE:
-      return {
-        ...state,
-        musicVideoList: action.payload.musicVideoList,
-        genreList: action.payload.genreList,
-      };
+    case SET_SELECTED_GENRE_ID:
+      return {...state, selectedGenreId: action.payload};
 
     default:
       return state;

@@ -5,20 +5,16 @@ import {
 } from "../actions/actionTypes";
 import {getMusicVideos} from "../../api/requestApi";
 import {GetMusicVideoResponseModel} from "../../../types";
-import {groupBy} from "lodash";
 
 function* getMusicVideo() {
   try {
     const response: GetMusicVideoResponseModel = yield call(getMusicVideos);
 
-    const musicVideoListGroupByGenreId = groupBy(response?.videos, "genre_id");
-
     yield put({
       type: SET_GET_MUSIC_VIDEO_RESPONSE,
       payload: {
-        musicVideoList: musicVideoListGroupByGenreId,
         genreList: response?.genres,
-        videoList: response?.videos,
+        musicVideoList: response?.videos,
       },
     });
   } catch (err) {}

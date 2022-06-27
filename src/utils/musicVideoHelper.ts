@@ -1,10 +1,11 @@
-import {Genre, GenreList} from "../../types";
+import {MusicVideo, MusicVideoList} from "../../types";
 
 export default {
-  findGenreTitleByGenreId(genreList: GenreList, genreId: string) {
-    return (
-      genreList.find((eachGenre: Genre) => eachGenre?.id === parseInt(genreId))
-        ?.name || `There is no title for genre_id: ${genreId}`
+  findMusicVideosByGenreId(musicVideoList: MusicVideoList, genreId: number) {
+    if (genreId === -1) return [];
+
+    return musicVideoList.filter(
+      (musicVideo: MusicVideo) => musicVideo?.genre_id === genreId
     );
   },
 };

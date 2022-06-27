@@ -1,6 +1,7 @@
 import {FontAwesome} from "@expo/vector-icons";
-import {FlatList, Pressable, StyleSheet, Text, View} from "react-native";
+import {FlatList, Pressable, StyleSheet, View} from "react-native";
 import {Genre, RootStackScreenProps} from "../../types";
+import {CustomText} from "../components/atoms";
 import Colors from "../constants/Colors";
 import {useAppDispatch, useAppSelector} from "../hooks/useRedux";
 import {setSelectedGenreId} from "../store/actions";
@@ -8,65 +9,68 @@ import {setSelectedGenreId} from "../store/actions";
 export default function ModalScreen({
   navigation,
 }: RootStackScreenProps<"Modal">) {
-  const musicVideoState = useAppSelector((state) => state?.musicVideoReducer);
+  const {genreList} = useAppSelector((state) => state?.musicVideoReducer);
+  const searchState = useAppSelector((state) => state?.searchReducer);
 
   const dispatch = useAppDispatch();
 
   const setGenreId = (genreId: number) => dispatch(setSelectedGenreId(genreId));
-
-  const renderItem = ({item}: {item: Genre}) => {
-    return (
-      <Pressable
-        onPress={() => {
-          setGenreId(item.id);
-          navigation.pop();
-        }}
-        style={{
-          flexDirection: "row",
-          alignItems: "center",
-          marginBottom: 10,
-          flex: 1,
-        }}
-      >
-        <View style={{padding: 5, marginRight: 5}}>
-          <FontAwesome
-            name={
-              item.id === musicVideoState?.selectedGenreId
-                ? "check-circle"
-                : "circle"
-            }
-            size={25}
-            color={Colors.white}
-          />
-        </View>
-        <Text style={{color: Colors.white}}>{item.name}</Text>
-      </Pressable>
-    );
-  };
 
   const onPressClearFilter = () => {
     setGenreId(-1);
     navigation.pop();
   };
 
+  const {container, btnRenderItem, iconCheck, flatListGenres, txtClearFilter} =
+    styles;
+
+  const renderItem = ({item}: {item: Genre}) => {
+    return (
+      <Pressable
+        onPress={() => {
+          setGenreId(item?.id);
+          navigation.pop();
+        }}
+        style={btnRenderItem}
+      >
+        <FontAwesome
+          name={
+            item?.id === searchState?.selectedGenreId
+              ? "check-circle"
+              : "circle"
+          }
+          size={25}
+          color={Colors.white}
+          style={iconCheck}
+        />
+
+        <CustomText
+          text={item?.name}
+          type={"medium"}
+          textColor={Colors.white}
+          numberOfLines={1}
+        />
+      </Pressable>
+    );
+  };
+
   return (
-    <View style={styles.container}>
+    <View style={container}>
       <FlatList
-        data={musicVideoState?.genreList}
+        data={genreList}
         renderItem={renderItem}
-        numColumns={2}
-        ListFooterComponent={
-          <Pressable
-            style={{
-              alignItems: "center",
-            }}
-            onPress={onPressClearFilter}
-          >
-            <Text
-              style={{color: Colors.white, textDecorationLine: "underline"}}
-            >
-              Clear Filter
-            </Text>
+        contentContainerStyle={flatListGenres}
+        initialNumToRender={10}
+        showsVerticalScrollIndicator={false}
+        ListHeaderComponent={
+          <Pressable onPress={onPressClearFilter}>
+            <CustomText
+              text={"Clear Filter"}
+              type={"bold"}
+              textColor={Colors.white}
+              underline
+              style={txtClearFilter}
+            />
           </Pressable>
         }
       />
@@ -79,5 +83,26 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: "center",
     backgroundColor: Colors.black,
+  },
+  flatListGenres: {
+    padding: 20,
+  },
+  txtClearFilter: {
+    alignSelf: "flex-end",
+    marginBottom: 20,
+  },
+  btnRenderItem: {
+    flexDirection: "row",
+    alignItems: "center",
+    marginBottom: 10,
+    borderWidth: 1,
+    borderColor: Colors.white,
+    borderRadius: 8,
+    padding: 10,
+    flex: 1,
+  },
+  iconCheck: {
+    padding: 5,
+    marginRight: 5,
   },
 });
