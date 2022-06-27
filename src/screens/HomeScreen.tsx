@@ -1,6 +1,7 @@
 import {useEffect, useState} from "react";
 import {
   ActivityIndicator,
+  Animated,
   FlatList,
   Image,
   StyleSheet,
@@ -22,9 +23,21 @@ export default function HomeScreen() {
   const dispatch = useAppDispatch();
   const fetchMusicVideo = () => dispatch(getMusicVideo());
 
+  const [fadeAnim] = useState(new Animated.Value(0));
+
   useEffect(() => {
     fetchMusicVideo();
   }, []);
+
+  useEffect(() => {
+    if (!loading) {
+      Animated.timing(fadeAnim, {
+        toValue: 1,
+        duration: 2000,
+        useNativeDriver: false,
+      }).start();
+    }
+  }, [loading]);
 
   const {
     container,
@@ -57,11 +70,12 @@ export default function HomeScreen() {
         <FlatList
           data={musicVideosByGenreId}
           renderItem={renderMusicVideoItem}
-          initialNumToRender={10}
+          initialNumToRender={5}
           keyExtractor={(__, index) => String(index)}
           contentContainerStyle={flatListMusicVideos}
           horizontal
           showsHorizontalScrollIndicator={false}
+          removeClippedSubviews
         />
       </>
     );
@@ -102,7 +116,7 @@ export default function HomeScreen() {
     );
   };
 
-  if (loading)
+  if (loading) {
     return (
       <ActivityIndicator
         size={"large"}
@@ -110,16 +124,18 @@ export default function HomeScreen() {
         style={activityIndicator}
       />
     );
+  }
 
   return (
     <View style={container}>
-      <FlatList
+      <Animated.FlatList
         data={genreList}
         renderItem={renderGenreItem}
         keyExtractor={(__, index) => String(index)}
-        initialNumToRender={10}
-        style={flatListGenres}
+        initialNumToRender={5}
+        style={[flatListGenres, {opacity: fadeAnim}]}
         showsVerticalScrollIndicator={false}
+        removeClippedSubviews
       />
     </View>
   );
@@ -137,6 +153,7 @@ const styles = StyleSheet.create({
   },
   flatListMusicVideos: {
     paddingHorizontal: Layout.s,
+    paddingBottom: Layout.l,
     marginBottom: Layout.l,
   },
   flatListGenres: {
