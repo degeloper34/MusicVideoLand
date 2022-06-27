@@ -9,17 +9,7 @@ const initialState: {
   genreList: [],
 };
 
-interface ActionSetGetMusicVideoResponse {
-  type: "SET_GET_MUSIC_VIDEO_RESPONSE";
-  payload: {
-    musicVideoList: MusicVideoList;
-    genreList: GenreList;
-  };
-}
-
-type Actions = ActionSetGetMusicVideoResponse;
-
-function musicVideoReducer(state = initialState, action: Actions) {
+function musicVideoReducer(state = initialState, action: any) {
   switch (action.type) {
     case SET_GET_MUSIC_VIDEO_RESPONSE:
       return {

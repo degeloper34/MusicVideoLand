@@ -6,14 +6,7 @@ const initialState: {
   selectedGenreId: -1,
 };
 
-interface ActionSetSelectedGenreId {
-  type: "SET_SELECTED_GENRE_ID";
-  payload: number;
-}
-
-type Actions = ActionSetSelectedGenreId;
-
-function musicVideoReducer(state = initialState, action: Actions) {
+function musicVideoReducer(state = initialState, action: any) {
   switch (action.type) {
     case SET_SELECTED_GENRE_ID:
       return {...state, selectedGenreId: action.payload};

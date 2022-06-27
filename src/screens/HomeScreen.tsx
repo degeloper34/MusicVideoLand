@@ -1,6 +1,7 @@
 import {useEffect, useState} from "react";
 import {
   ActivityIndicator,
+  Animated,
   FlatList,
   Image,
   StyleSheet,
@@ -22,8 +23,9 @@ export default function HomeScreen() {
   );
 
   const dispatch = useAppDispatch();
-
   const fetchMusicVideo = () => dispatch(getMusicVideo());
+
+  const [fadeAnim] = useState(new Animated.Value(0));
 
   useEffect(() => {
     setLoading(true);
@@ -118,8 +120,8 @@ export default function HomeScreen() {
   }
 
   return (
-    <View style={container}>
-      <FlatList
+    <Animated.View style={[container, {opacity: fadeAnim}]}>
+      <Animated.FlatList
         data={genreList}
         renderItem={renderGenreItem}
         keyExtractor={(__, index) => String(index)}
@@ -127,7 +129,7 @@ export default function HomeScreen() {
         style={flatListGenres}
         showsVerticalScrollIndicator={false}
       />
-    </View>
+    </Animated.View>
   );
 }
 

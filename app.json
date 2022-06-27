@@ -20,7 +20,6 @@
       "supportsTablet": false
     },
     "android": {
-      "supportsTablet": false,
       "adaptiveIcon": {
         "foregroundImage": "./src/assets/images/adaptive-icon.png",
         "backgroundColor": "#ffffff"
