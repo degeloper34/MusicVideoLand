@@ -14,12 +14,11 @@ import TabOneScreen from "../screens/TabOneScreen";
 import SearchScreen from "../screens/SearchScreen";
 import HomeScreen from "../screens/HomeScreen";
 import {RootStackParamList, RootTabParamList} from "../../types";
-import LinkingConfiguration from "./LinkingConfiguration";
 import {Pressable} from "react-native";
 
 export default function Navigation() {
   return (
-    <NavigationContainer linking={LinkingConfiguration}>
+    <NavigationContainer>
       <RootNavigator />
     </NavigationContainer>
   );
