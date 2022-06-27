@@ -16,6 +16,7 @@ function* getMusicVideo() {
       payload: {
         genreList: response?.genres,
         musicVideoList: response?.videos,
+        loading: false,
       },
     });
   } catch (err: any) {

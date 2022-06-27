@@ -1,7 +1,6 @@
 import {useEffect, useState} from "react";
 import {
   ActivityIndicator,
-  Animated,
   FlatList,
   Image,
   StyleSheet,
@@ -16,21 +15,15 @@ import {getMusicVideo} from "../store/actions";
 import musicVideoHelper from "../utils/musicVideoHelper";
 
 export default function HomeScreen() {
-  const [loading, setLoading] = useState(false);
-
-  const {musicVideoList, genreList} = useAppSelector(
+  const {musicVideoList, genreList, loading} = useAppSelector(
     (state) => state?.musicVideoReducer
   );
 
   const dispatch = useAppDispatch();
   const fetchMusicVideo = () => dispatch(getMusicVideo());
 
-  const [fadeAnim] = useState(new Animated.Value(0));
-
   useEffect(() => {
-    setLoading(true);
     fetchMusicVideo();
-    setLoading(false);
   }, []);
 
   const {
@@ -109,7 +102,7 @@ export default function HomeScreen() {
     );
   };
 
-  if (loading) {
+  if (loading)
     return (
       <ActivityIndicator
         size={"large"}
@@ -117,11 +110,10 @@ export default function HomeScreen() {
         style={activityIndicator}
       />
     );
-  }
 
   return (
-    <Animated.View style={[container, {opacity: fadeAnim}]}>
-      <Animated.FlatList
+    <View style={container}>
+      <FlatList
         data={genreList}
         renderItem={renderGenreItem}
         keyExtractor={(__, index) => String(index)}
@@ -129,7 +121,7 @@ export default function HomeScreen() {
         style={flatListGenres}
         showsVerticalScrollIndicator={false}
       />
-    </Animated.View>
+    </View>
   );
 }
 
