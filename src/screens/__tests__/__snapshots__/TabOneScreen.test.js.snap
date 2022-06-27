@@ -1,0 +1,36 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`TabOneScreen Tests TabOneScreen | Render without issues 1`] = `
+<View
+  style={
+    Object {
+      "alignItems": "center",
+      "backgroundColor": "#000",
+      "flex": 1,
+      "justifyContent": "center",
+    }
+  }
+>
+  <Text
+    style={
+      Object {
+        "color": "#fff",
+        "fontSize": 20,
+        "fontWeight": "bold",
+      }
+    }
+  >
+    Tab One
+  </Text>
+  <View
+    style={
+      Object {
+        "backgroundColor": "#fff",
+        "height": 1,
+        "marginVertical": 30,
+        "width": "80%",
+      }
+    }
+  />
+</View>
+`;

@@ -1,0 +1,98 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`ModalScreen Tests ModalScreen | Render without issues 1`] = `
+<View
+  style={
+    Object {
+      "backgroundColor": "#000",
+      "flex": 1,
+      "justifyContent": "center",
+    }
+  }
+>
+  <RCTScrollView
+    ListHeaderComponent={
+      <Memo(Pressable)
+        onPress={[Function]}
+      >
+        <CustomText
+          style={
+            Object {
+              "alignSelf": "flex-end",
+              "marginBottom": 20,
+            }
+          }
+          text="Clear Filter"
+          textColor="#fff"
+          type="bold"
+          underline={true}
+        />
+      </Memo(Pressable)>
+    }
+    contentContainerStyle={
+      Object {
+        "padding": 20,
+      }
+    }
+    data={Array []}
+    getItem={[Function]}
+    getItemCount={[Function]}
+    initialNumToRender={10}
+    keyExtractor={[Function]}
+    onContentSizeChange={[Function]}
+    onLayout={[Function]}
+    onMomentumScrollBegin={[Function]}
+    onMomentumScrollEnd={[Function]}
+    onScroll={[Function]}
+    onScrollBeginDrag={[Function]}
+    onScrollEndDrag={[Function]}
+    removeClippedSubviews={false}
+    renderItem={[Function]}
+    scrollEventThrottle={50}
+    showsVerticalScrollIndicator={false}
+    stickyHeaderIndices={Array []}
+    viewabilityConfigCallbackPairs={Array []}
+  >
+    <View>
+      <View
+        onLayout={[Function]}
+      >
+        <View
+          accessible={true}
+          collapsable={false}
+          focusable={true}
+          onBlur={[Function]}
+          onClick={[Function]}
+          onFocus={[Function]}
+          onResponderGrant={[Function]}
+          onResponderMove={[Function]}
+          onResponderRelease={[Function]}
+          onResponderTerminate={[Function]}
+          onResponderTerminationRequest={[Function]}
+          onStartShouldSetResponder={[Function]}
+        >
+          <Text
+            allowFontScaling={false}
+            style={
+              Array [
+                Object {
+                  "alignSelf": "flex-end",
+                  "marginBottom": 20,
+                },
+                Object {
+                  "color": "#fff",
+                  "fontFamily": "sora-bold",
+                  "fontSize": 12,
+                  "textDecorationLine": "underline",
+                },
+              ]
+            }
+          >
+            Clear Filter
+          </Text>
+        </View>
+      </View>
+    </View>
+  </RCTScrollView>
+</View>
+`;

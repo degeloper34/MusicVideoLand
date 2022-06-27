@@ -18,7 +18,6 @@ import searchHelper from "../utils/searchHelper";
 export default function SearchScreen({
   navigation,
 }: RootTabScreenProps<"TabSearch">) {
-  console.log("Render SearchScreen");
   const [searchedText, setSearchedText] = useState<string>("");
   const [filteredSearchedList, setFilteredSearchedList] =
     useState<MusicVideoList>([]);
@@ -42,8 +41,6 @@ export default function SearchScreen({
   };
 
   useEffect(() => {
-    console.log("useEffect SearchScreen");
-
     const musicVideoListByGenreId = musicVideoHelper.findMusicVideosByGenreId(
       musicVideoList,
       selectedGenreId

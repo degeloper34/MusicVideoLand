@@ -15,8 +15,6 @@ import {getMusicVideo} from "../store/actions";
 import musicVideoHelper from "../utils/musicVideoHelper";
 
 export default function HomeScreen() {
-  console.log("Render HomeScreen");
-
   const [loading, setLoading] = useState(false);
 
   const {musicVideoList, genreList} = useAppSelector(
