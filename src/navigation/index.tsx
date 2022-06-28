@@ -94,7 +94,7 @@ function BottomTabNavigator() {
         options={{
           title: "</>",
           tabBarIcon: ({color}) => <TabBarIcon name="code" color={color} />,
-          tabBarTestID: "TabOne",
+          tabBarTestID: "tab-one",
         }}
       />
       <BottomTab.Screen
@@ -103,7 +103,7 @@ function BottomTabNavigator() {
         options={{
           title: "Home",
           tabBarIcon: ({color}) => <TabBarIcon name="home" color={color} />,
-          tabBarTestID: "TabHome",
+          tabBarTestID: "tab-home",
         }}
       />
       <BottomTab.Screen
@@ -112,7 +112,7 @@ function BottomTabNavigator() {
         options={{
           title: "Search",
           tabBarIcon: ({color}) => <TabBarIcon name="search" color={color} />,
-          tabBarTestID: "TabSearch",
+          tabBarTestID: "tab-search",
         }}
       />
     </BottomTab.Navigator>

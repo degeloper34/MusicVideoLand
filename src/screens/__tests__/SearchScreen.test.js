@@ -27,7 +27,7 @@ describe("SearchScreen Tests", () => {
       </Provider>
     );
 
-    const toClick = await waitFor(() => getByTestId("btnFilter"));
+    const toClick = await waitFor(() => getByTestId("btn-filter"));
 
     await fireEvent(toClick, "press");
 

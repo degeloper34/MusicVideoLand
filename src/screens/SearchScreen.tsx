@@ -88,7 +88,7 @@ export default function SearchScreen({
         <Pressable
           onPress={onPressFilter}
           style={styles.btnFilter}
-          testID={"btnFilter"}
+          testID={"btn-filter"}
         >
           <FontAwesome name={"filter"} color={Colors.black} size={20} />
         </Pressable>

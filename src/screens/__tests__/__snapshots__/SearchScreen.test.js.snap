@@ -58,7 +58,7 @@ exports[`SearchScreen Tests SearchScreen | Render without issues 1`] = `
           "padding": 10,
         }
       }
-      testID="btnFilter"
+      testID="btn-filter"
     />
   </View>
   <RCTScrollView
