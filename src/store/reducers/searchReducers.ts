@@ -6,7 +6,7 @@ const initialState: {
   selectedGenreId: -1,
 };
 
-function musicVideoReducer(state = initialState, action: any) {
+function searchReducer(state = initialState, action: any) {
   switch (action.type) {
     case SET_SELECTED_GENRE_ID:
       return {...state, selectedGenreId: action.payload};
@@ -15,4 +15,4 @@ function musicVideoReducer(state = initialState, action: any) {
       return state;
   }
 }
-export default musicVideoReducer;
+export default searchReducer;
